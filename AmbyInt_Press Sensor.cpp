@@ -58,8 +58,7 @@ using namespace std;
 
 
 
-
-int main()//************************************************TCP Server******************************
+int main()//********************************TCP Server******************************
 {
 	WSADATA wsData;
 	WORD ver = MAKEWORD(2, 2);
@@ -70,14 +69,12 @@ int main()//************************************************TCP Server**********
 				{
 					cerr << "can't initialize winsock!quitting" << endl;
 					return 0;
-
 				}
 	SOCKET listening = socket(AF_INET, SOCK_STREAM, 0);
 				if (listening == INVALID_SOCKET)
 				{
 					cerr << "can't create a socket! Quitting" << endl;
 					return 0;
-
 				}
 
 	sockaddr_in hint;
@@ -104,15 +101,13 @@ int main()//************************************************TCP Server**********
 						inet_ntop(AF_INET, &client.sin_addr, host, NI_MAXHOST);
 						cout << host << "    connected on port" << ntohs(client.sin_port) << endl;
 					}
-	
-				
 				
 				while (true)
 
 				{
 					ZeroMemory(buf, 8);
 				
-										//********************************************reading from file**********************************
+				//**************************************reading from file**********************************
 
 					Timer timer;
 
@@ -145,30 +140,24 @@ int main()//************************************************TCP Server**********
 							++i;
 						}
 						else
-						
-							
+								
 							{
-
 								Xline = Xline / i; //calculating the average of every 150 msec data reading from sensor and printing the result
 								snprintf(buf, sizeof(buf), "%.2f ", Xline);  //converting sensor data to string befor sending
 								send(clientsocket, buf, 8, 0);  //sending sensor data via TCP 
 								send(clientsocket, CR, 4, 0);  //Sending carriage return command
-							
-														
+																					
 								timer.stop();
 								timer.start(); //reset timer
 								Xline = 0;
 								Nline = 0;
 								i = 0;
 							}
-								
-					}
+						}
 
 
 					inFile.close();
 					return 0;
-
-
 
 					//close the socket
 					closesocket(clientsocket);
